@@ -1,0 +1,29 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="bg">locale/LeisureCoin_bg.qm</file>
+        <file alias="ca">locale/LeisureCoin_ca.qm</file>
+        <file alias="cs">locale/LeisureCoin_cs.qm</file>
+        <file alias="da">locale/LeisureCoin_da.qm</file>
+        <file alias="de">locale/LeisureCoin_de.qm</file>
+        <file alias="en">locale/LeisureCoin_en.qm</file>
+        <file alias="en_US">locale/LeisureCoin_en_US.qm</file>
+        <file alias="es">locale/LeisureCoin_es.qm</file>
+        <file alias="fi">locale/LeisureCoin_fi.qm</file>
+        <file alias="fr_FR">locale/LeisureCoin_fr_FR.qm</file>
+        <file alias="it">locale/LeisureCoin_it.qm</file>
+        <file alias="ja">locale/LeisureCoin_ja.qm</file>
+        <file alias="ko_KR">locale/LeisureCoin_ko_KR.qm</file>
+        <file alias="nl">locale/LeisureCoin_nl.qm</file>
+        <file alias="pl">locale/LeisureCoin_pl.qm</file>
+        <file alias="pt">locale/LeisureCoin_pt.qm</file>
+        <file alias="pt_BR">locale/LeisureCoin_pt_BR.qm</file>
+        <file alias="ro_RO">locale/LeisureCoin_ro_RO.qm</file>
+        <file alias="ru">locale/LeisureCoin_ru.qm</file>
+        <file alias="sk">locale/LeisureCoin_sk.qm</file>
+        <file alias="sv">locale/LeisureCoin_sv.qm</file>
+        <file alias="tr">locale/LeisureCoin_tr.qm</file>
+        <file alias="uk">locale/LeisureCoin_uk.qm</file>
+        <file alias="zh_CN">locale/LeisureCoin_zh_CN.qm</file>
+        <file alias="zh_TW">locale/LeisureCoin_zh_TW.qm</file>
+    </qresource>
+</RCC>
