@@ -179,6 +179,66 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
 
     // Create status bar
     statusBar();
+    
+    // Social icons
+    QFrame* frameSocial = new QFrame();
+    frameSocial->setContentsMargins(0, 0, 0, 0);
+    frameSocial->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+    QHBoxLayout* frameSocialLayout = new QHBoxLayout(frameSocial);
+    frameSocialLayout->setContentsMargins(16, 0, 16, 0);
+    frameSocialLayout->setSpacing(16);
+    QLabel* web = new QLabel();
+    web->setObjectName(QStringLiteral("web"));
+    web->setMinimumSize(QSize(102, 21));
+    web->setMaximumSize(QSize(102, 21));
+    web->setBaseSize(QSize(0, 0));
+    web->setCursor(QCursor(Qt::PointingHandCursor));
+    web->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+    web->setOpenExternalLinks(true);
+#ifndef QT_NO_TOOLTIP
+    web->setToolTip(QApplication::translate("OverviewPage", "Visit the official LeisureCoin Website.", nullptr));
+#endif // QT_NO_TOOLTIP
+    web->setText(QApplication::translate("OverviewPage", "<a href=\"http://www.leisurecoins.org\"><img src=\":/icons/blank\" width=\"102\" height=\"21\"></a>", nullptr));
+    QLabel* facebook = new QLabel();
+    facebook->setObjectName(QStringLiteral("facebook"));
+    facebook->setMinimumSize(QSize(21, 21));
+    facebook->setMaximumSize(QSize(21, 21));
+    facebook->setBaseSize(QSize(0, 0));
+    facebook->setCursor(QCursor(Qt::PointingHandCursor));
+    facebook->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+    facebook->setOpenExternalLinks(true);
+#ifndef QT_NO_TOOLTIP
+    facebook->setToolTip(QApplication::translate("OverviewPage", "Follow LeisureCoin on Facebook.", nullptr));
+#endif // QT_NO_TOOLTIP
+    facebook->setText(QApplication::translate("OverviewPage", "<a href=\"https://www.facebook.com/leisurecoinexchange\"><img src=\":/icons/blank\" width=\"21\" height=\"21\"></a>", nullptr));
+    QLabel* twitter = new QLabel();
+    twitter->setObjectName(QStringLiteral("twitter"));
+    twitter->setMinimumSize(QSize(21, 21));
+    twitter->setMaximumSize(QSize(21, 21));
+    twitter->setBaseSize(QSize(0, 0));
+    twitter->setCursor(QCursor(Qt::PointingHandCursor));
+    twitter->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+    twitter->setOpenExternalLinks(true);
+#ifndef QT_NO_TOOLTIP
+    twitter->setToolTip(QApplication::translate("OverviewPage", "Follow LeisureCoin on Twitter.", nullptr));
+#endif // QT_NO_TOOLTIP
+    twitter->setText(QApplication::translate("OverviewPage", "<a href=\"https://twitter.com/LeisureCoins\"><img src=\":/icons/blank\" width=\"21\" height=\"21\"></a>", nullptr));
+    QLabel* discord = new QLabel();
+    discord->setObjectName(QStringLiteral("discord"));
+    discord->setMinimumSize(QSize(21, 21));
+    discord->setMaximumSize(QSize(21, 21));
+    discord->setBaseSize(QSize(0, 0));
+    discord->setCursor(QCursor(Qt::PointingHandCursor));
+    discord->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+    discord->setOpenExternalLinks(true);
+#ifndef QT_NO_TOOLTIP
+    discord->setToolTip(QApplication::translate("OverviewPage", "Join the official LeisureCoin Discord community.", nullptr));
+#endif // QT_NO_TOOLTIP
+    discord->setText(QApplication::translate("OverviewPage", "<a href=\"https://discord.gg/ZasT85W\"><img src=\":/icons/blank\" width=\"21\" height=\"21\"></a>", nullptr));
+    frameSocialLayout->addWidget(web);
+    frameSocialLayout->addWidget(facebook);
+    frameSocialLayout->addWidget(twitter);
+    frameSocialLayout->addWidget(discord);
 
     // Status bar notification icons
     QFrame* frameBlocks = new QFrame();
@@ -230,7 +290,8 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
     if (curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle") {
         progressBar->setStyleSheet("QProgressBar { background-color: #F8F8F8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #00CCFF, stop: 1 #33CCFF); border-radius: 7px; margin: 0px; }");
     }
-
+    
+    statusBar()->addWidget(frameSocial);
     statusBar()->addWidget(progressBarLabel);
     statusBar()->addWidget(progressBar);
     statusBar()->addPermanentWidget(frameBlocks);
@@ -301,8 +362,8 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     overviewIcon.addPixmap(overviewIconActive,QIcon::Active,QIcon::Off);
 
     overviewAction = new QAction(overviewIcon, tr("&Overview"), this);
-    overviewAction->setStatusTip(tr("Show general overview of wallet"));
-    overviewAction->setToolTip(overviewAction->statusTip());
+    //overviewAction->setStatusTip(tr("Show general overview of wallet"));
+    overviewAction->setToolTip(tr("Show general overview of wallet"));
     overviewAction->setCheckable(true);
 #ifdef Q_OS_MAC
     overviewAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_1));
@@ -321,8 +382,8 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     sendIcon.addPixmap(sendIconActive,QIcon::Active,QIcon::Off);
 
     sendCoinsAction = new QAction(sendIcon, tr("&Send"), this);
-    sendCoinsAction->setStatusTip(tr("Send coins to a LeisureCoin address"));
-    sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
+    //sendCoinsAction->setStatusTip(tr("Send coins to a LeisureCoin address"));
+    sendCoinsAction->setToolTip(tr("Send coins to a LeisureCoin address"));
     sendCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
     sendCoinsAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_2));
@@ -341,8 +402,8 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     receiveIcon.addPixmap(receiveIconActive,QIcon::Active,QIcon::Off);
 
     receiveCoinsAction = new QAction(receiveIcon, tr("&Receive"), this);
-    receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and LeisureCoin: URIs)"));
-    receiveCoinsAction->setToolTip(receiveCoinsAction->statusTip());
+    //receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and LeisureCoin: URIs)"));
+    receiveCoinsAction->setToolTip(tr("Request payments (generates QR codes and LeisureCoin: URIs)"));
     receiveCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
     receiveCoinsAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
@@ -361,8 +422,8 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     historyIcon.addPixmap(historyIconActive,QIcon::Active,QIcon::Off);
 
     historyAction = new QAction(historyIcon, tr("&Transactions"), this);
-    historyAction->setStatusTip(tr("Browse transaction history"));
-    historyAction->setToolTip(historyAction->statusTip());
+    //historyAction->setStatusTip(tr("Browse transaction history"));
+    historyAction->setToolTip(tr("Browse transaction history"));
     historyAction->setCheckable(true);
 #ifdef Q_OS_MAC
     historyAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_4));
@@ -385,8 +446,8 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
         masternodesIcon.addPixmap(masternodesIconActive,QIcon::Active,QIcon::Off);
 
         masternodeAction = new QAction(masternodesIcon, tr("&Masternodes"), this);
-        masternodeAction->setStatusTip(tr("Browse masternodes"));
-        masternodeAction->setToolTip(masternodeAction->statusTip());
+        //masternodeAction->setStatusTip(tr("Browse masternodes"));
+        masternodeAction->setToolTip(tr("Browse masternodes"));
         masternodeAction->setCheckable(true);
 #ifdef Q_OS_MAC
         masternodeAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_6));
@@ -582,6 +643,9 @@ void BitcoinGUI::createToolBars()
         QToolBar* toolbar = new QToolBar(tr("Tabs toolbar"));
         toolbar->setObjectName("Main-Toolbar"); // Name for CSS addressing
         toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        QLabel* logo = new QLabel();
+        logo->setObjectName(QStringLiteral("logo"));
+        toolbar->addWidget(logo);
         toolbar->addAction(overviewAction);
         toolbar->addAction(sendCoinsAction);
         toolbar->addAction(receiveCoinsAction);

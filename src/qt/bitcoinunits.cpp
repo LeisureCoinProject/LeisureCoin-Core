@@ -42,11 +42,11 @@ QString BitcoinUnits::id(int unit)
 {
     switch (unit) {
     case LeisureCoin:
-        return QString("bitg");
+        return QString("LSR");
     case mLeisureCoin:
-        return QString("mbitg");
+        return QString("mLSR");
     case uLeisureCoin:
-        return QString::fromUtf8("ubitg");
+        return QString::fromUtf8("uLSR");
     default:
         return QString("???");
     }
@@ -57,22 +57,22 @@ QString BitcoinUnits::name(int unit)
     if (Params().NetworkID() == CBaseChainParams::MAIN) {
         switch (unit) {
         case LeisureCoin:
-            return QString("LeisureCoin");
+            return QString("LSR");
         case mLeisureCoin:
-            return QString("mLeisureCoin");
+            return QString("mLSR");
         case uLeisureCoin:
-            return QString::fromUtf8("μLeisureCoin");
+            return QString::fromUtf8("μLSR");
         default:
             return QString("???");
         }
     } else {
         switch (unit) {
         case LeisureCoin:
-            return QString("tLeisureCoin");
+            return QString("tLSR");
         case mLeisureCoin:
-            return QString("mtLeisureCoin");
+            return QString("mtLSR");
         case uLeisureCoin:
-            return QString::fromUtf8("μtLeisureCoin");
+            return QString::fromUtf8("μtLSR");
         default:
             return QString("???");
         }
@@ -84,22 +84,22 @@ QString BitcoinUnits::description(int unit)
     if (Params().NetworkID() == CBaseChainParams::MAIN) {
         switch (unit) {
         case LeisureCoin:
-            return QString("LeisureCoin");
+            return QString("LSR");
         case mLeisureCoin:
-            return QString("Milli-LeisureCoin (1 / 1" THIN_SP_UTF8 "000)");
+            return QString("Milli-LSR (1 / 1" THIN_SP_UTF8 "000)");
         case uLeisureCoin:
-            return QString("Micro-LeisureCoin (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            return QString("Micro-LSR (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
         default:
             return QString("???");
         }
     } else {
         switch (unit) {
         case LeisureCoin:
-            return QString("TestLeisureCoins");
+            return QString("TestLSR");
         case mLeisureCoin:
-            return QString("Milli-TestLeisureCoin (1 / 1" THIN_SP_UTF8 "000)");
+            return QString("Milli-TestLSR (1 / 1" THIN_SP_UTF8 "000)");
         case uLeisureCoin:
-            return QString("Micro-TestLeisureCoin (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            return QString("Micro-TestLSR (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
         default:
             return QString("???");
         }
@@ -151,11 +151,11 @@ QString BitcoinUnits::format(int unit, const CAmount& nIn, bool fPlus, Separator
 
     // Use SI-style thin space separators as these are locale independent and can't be
     // confused with the decimal marker.
-    QChar thin_sp(THIN_SP_CP);
+    //QChar thin_sp(REAL_THIN_SP_CP);
     int q_size = quotient_str.size();
     if (separators == separatorAlways || (separators == separatorStandard && q_size > 4))
         for (int i = 3; i < q_size; i += 3)
-            quotient_str.insert(q_size - i, thin_sp);
+            quotient_str.insert(q_size - i, ",");
 
     if (n < 0)
         quotient_str.insert(0, '-');

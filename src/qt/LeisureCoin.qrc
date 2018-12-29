@@ -1,4 +1,4 @@
-<!DOCTYPE RCC><RCC version="1.0">
+<RCC>
     <qresource prefix="/icons">
         <file alias="bitcoin">res/icons/bitcoin.png</file>
         <file alias="address-book">res/icons/address-book.png</file>
@@ -57,6 +57,11 @@
         <file alias="browse">res/icons/browse.png</file>
         <file alias="staking_active">res/icons/staking_active.png</file>
         <file alias="staking_inactive">res/icons/staking_inactive.png</file>
+        <file alias="facebook">res/icons/facebook.png</file>
+        <file alias="twitter">res/icons/twitter.png</file>
+        <file alias="discord">res/icons/discord.png</file>
+        <file alias="web">res/icons/web.png</file>
+        <file alias="blank">res/icons/blank.png</file>
     </qresource>
     <qresource prefix="/css">
         <file alias="default">res/css/default.css</file>
@@ -64,7 +69,7 @@
     <qresource prefix="/images">
         <file alias="LeisureCoin_logo_horizontal">res/images/LeisureCoin_logo_horizontal.png</file>
         <file alias="about">res/images/about.png</file>
-	<file alias="downArrow">res/images/downArrow.png</file>
+        <file alias="downArrow">res/images/downArrow.png</file>
         <file alias="downArrow_small">res/images/downArrow_small_dark.png</file>
         <file alias="downArrow_small_white">res/images/downArrow_small.png</file>
         <file alias="upArrow_small">res/images/upArrow_small_dark.png</file>
@@ -75,6 +80,9 @@
         <file alias="walletFrame">res/images/walletFrame.png</file>
         <file alias="splash">res/images/splash.png</file>
         <file alias="splash_testnet">res/images/splash_testnet.png</file>
+        <file alias="LeisureCoin_logo_icon_fx">res/images/LeisureCoin_logo_icon_fx.png</file>
+        <file alias="recent_trans">res/images/recent_trans.png</file>
+        <file alias="balance_bg">res/images/balance_bg.png</file>
     </qresource>
     <qresource prefix="/movies">
         <file alias="spinner-000">res/movies/spinner-000.png</file>

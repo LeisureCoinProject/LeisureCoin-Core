@@ -52,7 +52,7 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
     verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
     verticalLayout_8->setContentsMargins(0, 0, 0, 0);
 
-    QHBoxLayout* horizontalLayout_Header = new QHBoxLayout();
+    /*QHBoxLayout* horizontalLayout_Header = new QHBoxLayout();
     horizontalLayout_Header->setObjectName(QStringLiteral("horizontalLayout_Header"));
 
     QLabel* labelOverviewHeaderLeft = new QLabel(frame_Header);
@@ -83,7 +83,7 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
     horizontalLayout_Header->addWidget(labelOverviewHeaderRight);
     horizontalLayout_Header->setStretch(0, 1);
     horizontalLayout_Header->setStretch(2, 1);
-    verticalLayout_8->addLayout(horizontalLayout_Header);
+    verticalLayout_8->addLayout(horizontalLayout_Header);*/
 
     QVBoxLayout* vbox = new QVBoxLayout();
     QHBoxLayout* hbox_buttons = new QHBoxLayout();
