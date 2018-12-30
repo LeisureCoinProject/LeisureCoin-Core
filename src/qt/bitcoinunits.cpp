@@ -151,11 +151,11 @@ QString BitcoinUnits::format(int unit, const CAmount& nIn, bool fPlus, Separator
 
     // Use SI-style thin space separators as these are locale independent and can't be
     // confused with the decimal marker.
-    //QChar thin_sp(REAL_THIN_SP_CP);
+    QChar thin_sp(REAL_THIN_SP_CP);
     int q_size = quotient_str.size();
     if (separators == separatorAlways || (separators == separatorStandard && q_size > 4))
         for (int i = 3; i < q_size; i += 3)
-            quotient_str.insert(q_size - i, ",");
+            quotient_str.insert(q_size - i, thin_sp);
 
     if (n < 0)
         quotient_str.insert(0, '-');
