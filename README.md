@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/LeisureCoinProject/LeisureCoine-Core.svg?branch=master)](https://travis-ci.com/LeisureCoinProject/LeisureCoin-explorer)
 LeisureCoin Core integration/staging repository
 =================================================
 
