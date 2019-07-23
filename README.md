@@ -44,3 +44,5 @@ These tiers will be separated on our exchange so you can choose your risk factor
 <tr><td>Max Coin Supply (PoS Phase)</td><td>37,000,000 LSR</td></tr>
 <tr><td>Masternode Collateral</td><td>10,000</td></tr>
 </table>
+
+![LeisureCoin Logo](https://github.com/LeisureCoinProject/LeisureCoin-Core/blob/master/src/qt/res/images/leisurecoinpic.png)
