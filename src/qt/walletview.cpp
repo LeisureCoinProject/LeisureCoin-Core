@@ -1,11 +1,12 @@
-// Copyright (c) 2011-2013 The Bitcoin developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin developers
+// Copyright (c) 2016-2018 The PIVX developers
+// Copyright (c) 2017-2019 The LeisureCoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "walletview.h"
 
 #include "addressbookpage.h"
-#include "askpassphrasedialog.h"
 #include "bip38tooldialog.h"
 #include "bitcoingui.h"
 #include "blockexplorer.h"
@@ -52,7 +53,7 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
     verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
     verticalLayout_8->setContentsMargins(0, 0, 0, 0);
 
-    /*QHBoxLayout* horizontalLayout_Header = new QHBoxLayout();
+    QHBoxLayout* horizontalLayout_Header = new QHBoxLayout();
     horizontalLayout_Header->setObjectName(QStringLiteral("horizontalLayout_Header"));
 
     QLabel* labelOverviewHeaderLeft = new QLabel(frame_Header);
@@ -83,7 +84,7 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
     horizontalLayout_Header->addWidget(labelOverviewHeaderRight);
     horizontalLayout_Header->setStretch(0, 1);
     horizontalLayout_Header->setStretch(2, 1);
-    verticalLayout_8->addLayout(horizontalLayout_Header);*/
+    verticalLayout_8->addLayout(horizontalLayout_Header);
 
     QVBoxLayout* vbox = new QVBoxLayout();
     QHBoxLayout* hbox_buttons = new QHBoxLayout();
@@ -127,6 +128,13 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
     if (settings.value("fShowMasternodesTab").toBool()) {
         masternodeListPage = new MasternodeList();
         addWidget(masternodeListPage);
+    }
+
+    /*  Show governance tab if at least one of the sub-tabs is enabled */
+    if (settings.value("fShowBudgetProposalsTab").toBool() || settings.value("fShowCommunityProposalsTab").toBool())
+    {
+        proposalList = new ProposalList(this);
+        addWidget(proposalList);
     }
 
     // Clicking on a transaction on the overview pre-selects the transaction on the transaction history page
@@ -194,6 +202,10 @@ void WalletView::setWalletModel(WalletModel* walletModel)
     }
     receiveCoinsPage->setModel(walletModel);
     sendCoinsPage->setModel(walletModel);
+    if (settings.value("fShowBudgetProposalsTab").toBool() || settings.value("fShowCommunityProposalsTab").toBool())
+    {
+        proposalList->setModel(walletModel);
+    }
 
     if (walletModel) {
         // Receive and pass through messages from wallet model
@@ -208,7 +220,7 @@ void WalletView::setWalletModel(WalletModel* walletModel)
             this, SLOT(processNewTransaction(QModelIndex, int, int)));
 
         // Ask for passphrase if needed
-        connect(walletModel, SIGNAL(requireUnlock()), this, SLOT(unlockWallet()));
+        connect(walletModel, SIGNAL(requireUnlock(AskPassphraseDialog::Context)), this, SLOT(unlockWallet(AskPassphraseDialog::Context)));
 
         // Show progress dialog
         connect(walletModel, SIGNAL(showProgress(QString, int)), this, SLOT(showProgress(QString, int)));
@@ -256,6 +268,15 @@ void WalletView::gotoMasternodePage()
     QSettings settings;
     if (settings.value("fShowMasternodesTab").toBool()) {
         setCurrentWidget(masternodeListPage);
+    }
+}
+
+void WalletView::gotoProposalPage()
+{
+    QSettings settings;
+    if (settings.value("fShowBudgetProposalsTab").toBool() || settings.value("fShowCommunityProposalsTab").toBool())
+    {
+        setCurrentWidget(proposalList);
     }
 }
 
@@ -337,7 +358,8 @@ void WalletView::encryptWallet(bool status)
 {
     if (!walletModel)
         return;
-    AskPassphraseDialog dlg(status ? AskPassphraseDialog::Encrypt : AskPassphraseDialog::Decrypt, this, walletModel);
+    AskPassphraseDialog dlg(status ? AskPassphraseDialog::Mode::Encrypt : AskPassphraseDialog::Mode::Decrypt, this,
+                            walletModel, AskPassphraseDialog::Context::Encrypt);
     dlg.exec();
 
     updateEncryptionStatus();
@@ -347,7 +369,7 @@ void WalletView::backupWallet()
 {
     QString filename = GUIUtil::getSaveFileName(this,
         tr("Backup Wallet"), QString(),
-        tr("Wallet Data (*.dat)"), NULL);
+        tr("Wallet Data (*.dat)"), nullptr);
 
     if (filename.isEmpty())
         return;
@@ -363,18 +385,18 @@ void WalletView::backupWallet()
 
 void WalletView::changePassphrase()
 {
-    AskPassphraseDialog dlg(AskPassphraseDialog::ChangePass, this, walletModel);
+    AskPassphraseDialog dlg(AskPassphraseDialog::Mode::ChangePass, this, walletModel, AskPassphraseDialog::Context::ChangePass);
     dlg.exec();
 }
 
-void WalletView::unlockWallet()
+void WalletView::unlockWallet(AskPassphraseDialog::Context context)
 {
     if (!walletModel)
         return;
     // Unlock wallet when requested by wallet model
 
     if (walletModel->getEncryptionStatus() == WalletModel::Locked || walletModel->getEncryptionStatus() == WalletModel::UnlockedForStakingOnly) {
-        AskPassphraseDialog dlg(AskPassphraseDialog::UnlockStaking, this, walletModel);
+        AskPassphraseDialog dlg(AskPassphraseDialog::Mode::UnlockStaking, this, walletModel, context);
         dlg.exec();
     }
 }
@@ -396,11 +418,11 @@ void WalletView::toggleLockWallet()
 
     // Unlock the wallet when requested
     if (encStatus == walletModel->Locked) {
-        AskPassphraseDialog dlg(AskPassphraseDialog::Unlock, this, walletModel);
+        AskPassphraseDialog dlg(AskPassphraseDialog::Mode::Unlock, this, walletModel, AskPassphraseDialog::Context::ToggleLock);
         dlg.exec();
     }
 
-    else if (encStatus == walletModel->Unlocked) {
+    else if (encStatus == walletModel->Unlocked || encStatus == walletModel->UnlockedForStakingOnly) {
         walletModel->setWalletLocked(true);
     }
 }

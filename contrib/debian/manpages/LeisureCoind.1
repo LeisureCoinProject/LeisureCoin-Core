@@ -84,14 +84,14 @@ This help message
 \fBbackupwallet 'destination'\fR
 Safely copies *wallet.dat* to 'destination', which can be a directory or a path with filename.
 .TP
-\fBgetaccount 'LSRaddress'\fR
+\fBgetaccount 'LeisureCoinaddress'\fR
 Returns the account associated with the given address.
 .TP
-\fBsetaccount 'LSRaddress' ['account']\fR
+\fBsetaccount 'LeisureCoinaddress' ['account']\fR
 Sets the ['account'] associated with the given address. ['account'] may be omitted to remove an address from ['account'].
 .TP
 \fBgetaccountaddress 'account'\fR
-Returns a new LSR address for 'account'.
+Returns a new LeisureCoin address for 'account'.
 .TP
 \fBgetaddressesbyaccount 'account'\fR
 Returns the list of addresses associated with the given 'account'.
@@ -124,13 +124,13 @@ Returns a recent hashes per second performance measurement while generating.
 Returns an object containing server information.
 .TP
 \fBgetnewaddress 'account'\fR
-Returns a new LSR address for receiving payments. If 'account' is specified (recommended), it is added to the address book so payments received with the address will be credited to 'account'.
+Returns a new LeisureCoin address for receiving payments. If 'account' is specified (recommended), it is added to the address book so payments received with the address will be credited to 'account'.
 .TP
 \fBgetreceivedbyaccount 'account' ['minconf=1']\fR
 Returns the total amount received by addresses associated with 'account' in transactions with at least ['minconf'] confirmations.
 .TP
-\fBgetreceivedbyaddress 'LSRaddress' ['minconf=1']\fR
-Returns the total amount received by 'LSRaddress' in transactions with at least ['minconf'] confirmations.
+\fBgetreceivedbyaddress 'LeisureCoinaddress' ['minconf=1']\fR
+Returns the total amount received by 'LeisureCoinaddress' in transactions with at least ['minconf'] confirmations.
 .TP
 \fBgettransaction 'txid'\fR
 Returns information about a specific transaction, given hexadecimal transaction ID.
@@ -148,7 +148,7 @@ List commands, or get help for a command.
 .TP
 \fBlistaccounts ['minconf=1']\fR
 List accounts and their current balances.
-     *note: requires LSR 1.0.0.1 or later.
+     *note: requires LeisureCoin 1.0.0.1 or later.
 .TP
 \fBlistreceivedbyaccount ['minconf=1'] ['includeempty=false']\fR
 ['minconf'] is the minimum number of confirmations before payments are included. ['includeempty'] whether to include addresses that haven't received any payments. Returns an array of objects containing:
@@ -177,26 +177,26 @@ Returns a list of the last ['count'] transactions for 'account' \- for all accou
     "message"       : message associated with transaction (only for send).
     "to"            : message-to associated with transaction (only for send).
 
-    *note: requires bitcoin green 1.0.0.1 or later.
+    *note: requires LeisureCoin 1.0.0.1 or later.
 .TP
 \fBmove <'fromaccount'> <'toaccount'> <'amount'> ['minconf=1'] ['comment']\fR
 Moves funds between accounts.
 .TP
-\fBsendfrom* <'account'> <'LSRaddress'> <'amount'> ['minconf=1'] ['comment'] ['comment-to']\fR
-Sends amount from account's balance to 'LSRaddress'. This method will fail if there is less than amount LeisureCoin with ['minconf'] confirmations in the account's balance (unless account is the empty-string-named default account; it behaves like the *sendtoaddress* method). Returns transaction ID on success.
+\fBsendfrom* <'account'> <'LeisureCoinaddress'> <'amount'> ['minconf=1'] ['comment'] ['comment-to']\fR
+Sends amount from account's balance to 'LeisureCoinaddress'. This method will fail if there is less than amount LeisureCoin with ['minconf'] confirmations in the account's balance (unless account is the empty-string-named default account; it behaves like the *sendtoaddress* method). Returns transaction ID on success.
 .TP
-\fBsendtoaddress 'LSRaddress' 'amount' ['comment'] ['comment-to']\fR
-Sends amount from the server's available balance to 'LSRaddress'. amount is a real and is rounded to the nearest 0.01. Returns transaction id on success.
+\fBsendtoaddress 'LeisureCoinaddress' 'amount' ['comment'] ['comment-to']\fR
+Sends amount from the server's available balance to 'LeisureCoinaddress'. amount is a real and is rounded to the nearest 0.01. Returns transaction id on success.
 .TP
 \fBstop\fR
-Stops the bitcoin green server.
+Stops the LeisureCoin server.
 .TP
-\fBvalidateaddress 'LSRaddress'\fR
-Checks that 'LSRaddress' looks like a proper LSR address. Returns an object containing:
+\fBvalidateaddress 'LeisureCoinaddress'\fR
+Checks that 'LeisureCoinaddress' looks like a proper LeisureCoin address. Returns an object containing:
 
     "isvalid" : true or false.
     "ismine"  : true if the address is in the server's wallet.
-    "address" : LSRaddress.
+    "address" : LeisureCoinaddress.
 
     *note: ismine and address are only returned if the address is valid.
 

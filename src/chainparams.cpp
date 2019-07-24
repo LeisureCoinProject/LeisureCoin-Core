@@ -2,12 +2,11 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2018 The LeisureCoin developers
+// Copyright (c) 2018-2019 The LeisureCoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "chainparams.h"
-#include "bignum.h"
 #include "random.h"
 #include "util.h"
 #include "utilstrencodings.h"
@@ -102,7 +101,7 @@ public:
         pchMessageStart[2] = 0x12;
         pchMessageStart[3] = 0xae;
         vAlertPubKey = ParseHex("04dd48139aa8fdb723a4f2c8e8d9bc536d3a207f1ff271c5136a9b11ff2a3fca943671f8f89c427aefe496e044165050d954a5294fd245aeec2b66de06ff3dd696");
-        nDefaultPort = 9333;
+        nDefaultPort = 27580;
         bnProofOfWorkLimit = ~uint256(0) >> 20; // LeisureCoin starting difficulty is 1 / 2^12
         nSubsidyHalvingInterval = 1050000;
         nMaxReorganizationDepth = 100;
@@ -118,7 +117,7 @@ public:
 
         /** Height or Time Based Activations **/
         nLastPOWBlock = 650;
-        nModifierUpdateBlock = 1; // we use the version 2 for PARK
+        nModifierUpdateBlock = 1; // we use the version 2 for LeisureCoin
 
         const char* pszTimestamp = "POLITICO 070618 China slams U.S. over \u2018largest trade war in economic history";
         CMutableTransaction txNew;
@@ -284,6 +283,8 @@ public:
         nTargetSpacing = 2 * 60;        // LeisureCoin: 2 minutes
         bnProofOfWorkLimit = ~uint256(0) >> 1;
         genesis.nTime = 1530919232;
+        nMaturity = 10;
+        genesis.nTime = 1516926684;
         genesis.nBits = 0x207fffff;
         genesis.nNonce = 12345;
 
@@ -299,6 +300,7 @@ public:
         fDefaultConsistencyChecks = true;
         fRequireStandard = false;
         fMineBlocksOnDemand = true;
+        fSkipProofOfWorkCheck = true;
         fTestnetToBeDeprecatedFieldRPC = false;
     }
     const Checkpoints::CCheckpointData& Checkpoints() const

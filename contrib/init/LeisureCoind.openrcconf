@@ -1,0 +1,26 @@
+# /etc/conf.d/LeisureCoind: config file for /etc/init.d/LeisureCoind
+
+# Config file location
+#BITCOIND_CONFIGFILE="/etc/LeisureCoin/LeisureCoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $BITCOIND_USER)
+#BITCOIND_PIDDIR="/var/run/LeisureCoind"
+
+# What filename to give the pidfile
+#BITCOIND_PIDFILE="${BITCOIND_PIDDIR}/LeisureCoind.pid"
+
+# Where to write LeisureCoind data (be mindful that the blockchain is large)
+#BITCOIND_DATADIR="/var/lib/LeisureCoind"
+
+# User and group to own LeisureCoind process
+#BITCOIND_USER="LeisureCoin"
+#BITCOIND_GROUP="LeisureCoin"
+
+# Path to LeisureCoind executable
+#BITCOIND_BIN="/usr/bin/LeisureCoind"
+
+# Nice value to run LeisureCoind under
+#BITCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+BITCOIND_OPTS=""

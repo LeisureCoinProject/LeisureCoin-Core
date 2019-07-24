@@ -1,7 +1,7 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2018 The LeisureCoin developers
+// Copyright (c) 2017-2017 The LeisureCoin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -42,11 +42,11 @@ QString BitcoinUnits::id(int unit)
 {
     switch (unit) {
     case LeisureCoin:
-        return QString("bitg");
+        return QString("LeisureCoin");
     case mLeisureCoin:
-        return QString("mbitg");
+        return QString("mLeisureCoin");
     case uLeisureCoin:
-        return QString::fromUtf8("ubitg");
+        return QString::fromUtf8("uLeisureCoin");
     default:
         return QString("???");
     }
@@ -68,11 +68,11 @@ QString BitcoinUnits::name(int unit)
     } else {
         switch (unit) {
         case LeisureCoin:
-            return QString("tLeiureCoin");
+            return QString("tLeisureCoin");
         case mLeisureCoin:
-            return QString("mtLeisureCoin");
+            return QString("tmLeisureCoin");
         case uLeisureCoin:
-            return QString::fromUtf8("μtLeisureCoin");
+            return QString::fromUtf8("tμLeisureCoin");
         default:
             return QString("???");
         }
@@ -95,7 +95,7 @@ QString BitcoinUnits::description(int unit)
     } else {
         switch (unit) {
         case LeisureCoin:
-            return QString("TestLeisureCoin");
+            return QString("TestLeisureCoins");
         case mLeisureCoin:
             return QString("Milli-TestLeisureCoin (1 / 1" THIN_SP_UTF8 "000)");
         case uLeisureCoin:

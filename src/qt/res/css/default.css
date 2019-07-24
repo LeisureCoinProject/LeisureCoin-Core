@@ -1,9 +1,23 @@
 /****************************************************************************************/
 /* Global color codes:                                                                  */
-/* dark-blue:          #003046                                                          */
-/* light-green:        #2b8047                                                          */
+/* dark-green:        #0f7f12                                                           */
+/* transparent-green: #e9e7ef (for inactive backgrounds)                                */
+/*                                                                                      */
+/* light-green1:      #43B043 (main green for white backgrounds)                        */
+/* light-green2:      #219C21 (sligtly darker for gradients)                            */
+/*                                                                                      */
+/* medium-green1:     #219C21 (on hover)                                                */
+/* medium-green1:     #006200 (main green for dark backgrounds)                         */
+/* medium-green2:     #004000 (sligtly darker for gradients)                            */
+/*                                                                                      */
 /* background:         #f8f6f6                                                          */
 /* input fields:       #e7e7e7                                                          */
+/****************************************************************************************/
+/*                                                                                      */
+/* Note: it's sometimes not easy to figure out all those screen elements, so unused     */
+/*       but valid ones are commented out, not removed, in case they will be needed     */
+/*       again in the future.                                                           */
+/*                                                                                      */
 /****************************************************************************************/
 
 WalletFrame {
@@ -61,43 +75,32 @@ QToolBar > QToolButton {
 	background-color:#000;
 	border:0px solid #333;
 	selection-background-color:transparent;
-	min-height: 20px;
-	padding: 45px 10px;
+	min-height:2.5em;
+	padding-left:30px;
 	font-weight: 400;
 	font-size: 13px;
 	color: #7c899e;
-	border-bottom:6px solid #000;
-	margin-bottom:1px;
+	width: 172px;
+	height: 60px;
 }
 
 QToolBar > QToolButton:checked {
 	background-color: #15181d;
 	color:#0e5f81;
 	border-bottom:6px solid #0d678c;
+	min-height:2.5em;
+	font-size: 11px;
+	min-width: 172px;
+	max-width: 172px;
+	width: 172px;
+	height: 60px;
+	padding-left:30px;
+}
 }
 
 QToolBar > QToolButton:hover:!checked {
 	background-color: #000;
 	color: #0e5f81;
-}
-
-QLabel#logo {
-	min-width:187px;
-	min-height:46px;
-	max-width:187px;
-	max-height:46px;
-	margin:0px 15px;
-	border-image: url(':/images/LeisureCoin_logo_horizontal') 0 0 0 0 stretch stretch;
-	border-top:0px solid #000;
-}
-
-QLabel#logoIcon {
-	min-width:299px;
-	min-height:314px;
-	max-width:299px;
-	max-height:314px;
-	border-image: url(':/images/LeisureCoin_logo_icon_fx') 0 0 0 0 stretch stretch;
-	border-top:0px solid #000;
 }
 
 QMessageBox {
@@ -172,6 +175,17 @@ QToolTip {
 	background-color:#fff;
 	color:#333;
 	border-style: none;
+}	
+logoToolbar {
+	min-width:65px;
+	min-height:65px;
+	max-width:65px;
+	max-height:65px;
+	border-image: url(':/images/overviewtoolbar') 0 0 0 0 stretch stretch;
+	border-top:0px solid #000;
+	margin-top:28px;
+	margin-right:28px;
+	margin-bottom:24px;
 }
 
 /****************************************************************************************/
@@ -245,6 +259,7 @@ QPushButton { /* Global Button Style */
 	padding-bottom:1px;
 	height: 26px;
 	margin: 2px;
+	text-transform: uppercase;
 }
 
 QPushButton:hover {
@@ -598,6 +613,42 @@ QSlider::handle:horizontal:hover {
 	border-radius: 8px;
 }
 
+QTabWidget {
+	border-bottom:1px solid #333;
+}
+
+QTabWidget::pane {
+	border: 1px solid #d7d7d7;
+}
+
+QTabWidget > QWidget {
+	background-color:#ffffff;
+	color:#333;
+}
+
+QTabWidget QTabBar::tab {
+	background-color:#f8f6f6;
+	color:#333;
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+	border-top: 1px solid #d7d7d7;
+}
+
+QTabWidget QTabBar::tab:first {
+	border-left: 1px solid #d7d7d7;
+}
+
+QTabWidget QTabBar::tab:last {
+	border-right: 1px solid #d7d7d7;
+}
+
+QTabWidget QTabBar::tab:selected, QTabWidget QTabBar::tab:hover {
+	background-color:#0f7f12;
+	color:#fff;
+}
+
 /**************************** DIALOG BOXES **********************************************/
 
 QDialog {
@@ -720,7 +771,9 @@ QWidget#AddressBookPage QHeaderView::section { /* Min width for Windows fix */
 /**************************** SETTINGS MENU *********************************************/
 
 /* Encrypt Wallet and Change Passphrase Dialog */
-QDialog#AskPassphraseDialog QLabel#passLabel1, QDialog#AskPassphraseDialog QLabel#passLabel2, QDialog#AskPassphraseDialog QLabel#passLabel3 {
+QDialog#AskPassphraseDialog QLabel#passLabel1,
+QDialog#AskPassphraseDialog QLabel#passLabel2,
+QDialog#AskPassphraseDialog QLabel#passLabel3 {
 	qproperty-alignment: 'AlignVCenter | AlignRight';
 }
 
@@ -822,12 +875,12 @@ QDialog#HelpMessageDialog QScrollBar:vertical, QDialog#HelpMessageDialog QScroll
 	border:0;
 }
 
-/* About Epic Dialog */
-QDialog#AboutDialog QLabel#label, QDialog#AboutDialog QLabel#copyrightLabel, QDialog#AboutDialog QLabel#label_2 { /* About Epic Contents */
+/* About LeisureCoin Dialog */
+QDialog#AboutDialog QLabel#label, QDialog#AboutDialog QLabel#copyrightLabel, QDialog#AboutDialog QLabel#label_2 { /* About LeisureCoin Contents */
 	margin-left:10px;
 }
 
-QDialog#AboutDialog QLabel#label_2 { /* Margin for About Epic text */
+QDialog#AboutDialog QLabel#label_2 { /* Margin for About LeisureCoin text */
 	margin-right:10px;
 }
 
@@ -843,29 +896,6 @@ QDialog#EditAddressDialog QLabel {
 /* Horizontal lines */
 QFrame[frameShape="4"] { /* QFrame::HLine == 0x0004 */
 	border:1px solid #372f44;
-}
-
-/* Headers */
-QLabel#labelOverviewHeaderLeft {
-	font-weight:bold;
-	font-size:20px;
-	background-color:#ffffff;
-}
-
-QLabel#labelOverviewHeaderRight {
-	qproperty-alignment: 'AlignVCenter | AlignRight';
-	background-image: url(':/images/epic_logo_horizontal');
-	background-repeat: no-repeat;
-}
-
-QWidget .QFrame#frame_Header { /* Header with Page-Title and PIVX-image */
-	min-width:400px;
-	background-color:#ffffff;
-}
-
-QWidget .QFrame#frame_BG { /* Background */
-	min-width:400px;
-	/* background-color:#ffffff; */
 }
 
 /**************************** OVERVIEW SCREEN *******************************************/
@@ -903,7 +933,7 @@ QWidget .QFrame#frameBalances .QLabel#labelWalletStatus { /* Wallet Sync Status 
 	margin-left: 3px;
 }
 
-QWidget .QFrame#frameBalances .QLabel#labelUnconfirmed, /* Pending Balance */
+QWidget .QFrame#frameBalances .QLabel#labelPending, /* Pending Balance */
 QWidget .QFrame#frameBalances .QLabel#labelImmature { /* Immature Balance */
 	qproperty-alignment: 'AlignVCenter | AlignRight';
 	font-size: 16px;
@@ -915,6 +945,7 @@ QWidget .QFrame#frameBalances .QLabel#labelImmature { /* Immature Balance */
 QWidget .QFrame#frameBalances .QLabel#labelWatchPending, /* Watch-only Pending Balance */
 QWidget .QFrame#frameBalances .QLabel#labelWatchImmature, /* Watch-only Immature Balance */
 QWidget .QFrame#frameBalances .QLabel#labelWatchAvailable, /* Watch-only Balance */
+QWidget .QFrame#frameBalances .QLabel#labelWatchLocked, /* Watch-only Locked Balance */
 QWidget .QFrame#frameBalances .QLabel#labelWatchonly, /* Watch-only Header */
 QWidget .QFrame#frameBalances .QLabel#labelSpendable { /* Spendable Header */
 	qproperty-alignment: 'AlignVCenter | AlignLeft';
@@ -923,56 +954,41 @@ QWidget .QFrame#frameBalances .QLabel#labelSpendable { /* Spendable Header */
 }
 
 QWidget .QFrame#frameBalances .QLabel#labelImmatureText, /* Immature Balance Label */
+QWidget .QFrame#frameBalances .QLabel#labelTotalText, /* Total Balance Label */
 QWidget .QFrame#frameBalances .QLabel#labelPendingText, /* Pending Balance Label */
-QWidget .QFrame#frameBalances .QLabel#labelBalances { /* EPIC Balances Header Label */
-	qproperty-alignment: 'AlignVCenter | AlignRight';
+QWidget .QFrame#frameBalances .QLabel#labelAvailableText, /* Available Balance Label */
+QWidget .QFrame#frameBalances .QLabel#labelLockedText, /* Locked Balance Label */
+QWidget .QFrame#frameBalances .QLabel#labelBalances { /* LeisureCoin Balances Header Label */
+	qproperty-alignment: 'AlignVCenter | AlignLeft';
+	min-width: 160px;
 	color: #646464;
-	font-size: 16px;
+	margin-right: 5px;
+	padding-right: 5px;
+	font-size: 14px;
 }
 
-QWidget .QFrame#frameBalances .QLabel#labelBalanceText {
-	color:#0a4a64;
-	margin-top:12px;
-	font-size:20px;
-	font-weight:300;
-}
-
-QWidget .QFrame#frameBalances .QLabel#labelTotalText {
-	color: #fff;
-	font-size: 24px;
-	font-weight:300;
-	border-image: url(':/images/balance_bg') 0 0 0 0 stretch stretch;
-	border-top:0px solid #000;
-	padding:12px;
-} /* Total Balance Label */
-
-
-QWidget .QFrame#frameBalances .QLabel#labelBalances { /* EPIC Balances Header Label */
+QWidget .QFrame#frameBalances .QLabel#labelBalances { /* LeisureCoin Balances Header Label */
 	font-weight: bold;
 }
 
-QWidget .QFrame#frameBalances #lineBalances { /* EPIC Balances Line separator */
-	background-color:#7c899e;
+QWidget .QFrame#frameBalances #lineBalances { /* LeisureCoin Balances Line separator */
+	background-color:#0f7f12;
 }
 
 
-QWidget .QFrame#frameBalances .QLabel#labelTotal { /* Total Balance */
-	qproperty-alignment: 'AlignVCenter | AlignRight';
-	font-size: 24px;
-	font-weight: 300;
-	color: #fff;
-	border-image: url(':/images/balance_bg') 0 0 0 0 stretch stretch;
-	border-top:0px solid #000;
-	padding:12px;
+QWidget .QFrame#frameBalances .QLabel#labelTotal, /* Total Balance */
+QWidget .QFrame#frameBalances .QLabel#labelAvailable { /* Available Balance */
+	qproperty-alignment: 'AlignVCenter | AlignLeft';
+	font-size: 14px;
+	font-weight: normal;
+	color: #0f7f12;
 }
 
-QWidget .QFrame#frameBalances .QLabel#labelBalance { /* Available Balance */
-	qproperty-alignment: 'AlignVCenter | AlignRight';
-	font-size: 20px;
-	font-weight: 300;
-	color: #0a4a64;
-	margin-top:12px;
-	padding-right:12px;
+QWidget .QFrame#frameBalances .QLabel#labelLocked { /* Locked Balance */
+	qproperty-alignment: 'AlignVCenter | AlignLeft';
+	font-size: 14px;
+	font-weight: normal;
+	color: #0f7f12;
 }
 
 QWidget .QFrame#frameBalances .QLabel#labelWatchTotal { /* Watch-only Total Balance */
@@ -990,7 +1006,7 @@ QWidget .QFrame#frame_RecentTransactions { /* Transactions Widget */
 	margin-top:0;
 }
 
-QWidget .QFrame#frame_RecentTransactions .QLabel#label_4 { /* Recent Transactions Label */
+QWidget .QFrame#frame_RecentTransactions .QLabel#labelRecentTransactions { /* Recent Transactions Label */
 	qproperty-alignment: 'AlignVCenter | AlignLeft';
 	min-width:180px;
 	background-color:transparent;
@@ -1115,11 +1131,15 @@ QStackedWidget#SendCoinsEntry .QFrame#SendCoins > .QLabel { /* Send Coin Entry L
 /* QStackedWidget#SendCoinsEntry .QValidatedLineEdit#payTo { /* Pay To Input Field */
 /* QStackedWidget#SendCoinsEntry .QValidatedLineEdit#payTo:!focus { /* Pay To Input Field */
 
-QStackedWidget#SendCoinsEntry .QToolButton { /* General Settings for Pay To Icons */
-	background-color: #0d678c;
+QStackedWidget#SendCoinsEntry .QToolButton, /* General Settings for Pay To Icons */
+QDialog#Bip38ToolDialog .QToolButton,
+QDialog#MultiSendDialog .QToolButton,
+QDialog#SignVerifyMessageDialog .QToolButton,
+QDialog#MultisigDialog .QToolButton {
+	background-color: #0f7f12;
 	border-width: 1px;
 	border-style: outset;
-	border-color: #0b85b8;
+	border-color: #006200;
 	border-radius: 2px;
 	color:#ffffff;
 	font-size:12px;
@@ -1127,17 +1147,25 @@ QStackedWidget#SendCoinsEntry .QToolButton { /* General Settings for Pay To Icon
 	margin: 2px;
 }
 
-QStackedWidget#SendCoinsEntry .QToolButton:hover { /* General Settings for Pay To Icons */
-	background-color: #0b85b8;
-	border-width: 1px;
-	border-style: outset;
-	border-color: #0b85b8;
+QStackedWidget#SendCoinsEntry .QToolButton:hover, /* General Settings for Pay To Icons */
+QDialog#Bip38ToolDialog .QToolButton:hover,
+QDialog#MultiSendDialog .QToolButton:hover,
+QDialog#SignVerifyMessageDialog .QToolButton:hover {
+	background-color: #219C21;
 }
 
-QStackedWidget#SendCoinsEntry .QToolButton:focus { /* General Settings for Pay To Icons */
+QStackedWidget#SendCoinsEntry .QToolButton:focus,  /* General Settings for Pay To Icons */
+QDialog#Bip38ToolDialog .QToolButton:focus,
+QDialog#MultiSendDialog .QToolButton:focus,
+QDialog#SignVerifyMessageDialog .QToolButton:focus,
+QDialog#MultisigDialog .QToolButton:hover {
 }
 
-QStackedWidget#SendCoinsEntry .QToolButton:pressed { /* General Settings for Pay To Icons */
+QStackedWidget#SendCoinsEntry .QToolButton:pressed, /* General Settings for Pay To Icons */
+QDialog#Bip38ToolDialog .QToolButton:pressed,
+QDialog#MultiSendDialog .QToolButton:pressed,
+QDialog#SignVerifyMessageDialog .QToolButton:pressed,
+QDialog#MultisigDialog .QToolButton:pressed {
 }
 
 /* QStackedWidget#SendCoinsEntry .QToolButton#addressBookButton { /* Address Book Button */
@@ -1252,7 +1280,7 @@ QDialog#CoinControlDialog .CoinControlTreeWidget#treeWidget::item {
 }
 
 QDialog#CoinControlDialog .CoinControlTreeWidget#treeWidget::item:selected { /* Coin Control Item (selected) */
-	background-color:#7c899e;
+	background-color:#0f7f12;
 	color:#fff;
 }
 
@@ -1287,10 +1315,6 @@ QDialog#CoinControlDialog .CoinControlTreeWidget#treeWidget::indicator { /* Coin
 
 QWidget#ReceiveCoinsDialog {
 	background-color:transparent;
-}
-
-QDialog#ReceiveCoinsDialog QLabel, QDialog#ReceiveCoinsDialog QCheckBox, QDialog#ReceiveCoinsDialog QRadioButton {
-	color:#7c899e;
 }
 
 QWidget#ReceiveCoinsDialog .QFrame#frame {
@@ -1379,8 +1403,6 @@ QWidget#MasternodeList {
 
 QWidget#MasternodeList .QFrame#frameList {
 	background-color:transparent;
-}
-
 QWidget#MasternodeList .QTabWidget {
 	background-color:transparent;
 }

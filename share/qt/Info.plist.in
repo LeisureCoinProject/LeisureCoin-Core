@@ -31,8 +31,14 @@
   <key>CFBundleExecutable</key>
   <string>LeisureCoin-Qt</string>
 
+  <key>CFBundleName</key>
+  <string>LeisureCoin-Qt</string>
+
+  <key>LSHasLocalizedDisplayName</key>
+  <true/>
+
   <key>CFBundleIdentifier</key>
-  <string>io.LeisureCoin.LeisureCoin-Qt</string>
+  <string>io.savebitcoin.LeisureCoin-Qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>
@@ -40,7 +46,7 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>io.LeisureCoin.LeisureCoinPayment</string>
+      <string>io.savebitcoin.LeisureCoinPayment</string>
       <key>CFBundleURLSchemes</key>
       <array>
         <string>LeisureCoin</string>
@@ -52,7 +58,7 @@
   <array>
     <dict>
       <key>UTTypeIdentifier</key>
-      <string>io.LeisureCoin.paymentrequest</string>
+      <string>io.savebitcoin.paymentrequest</string>
       <key>UTTypeDescription</key>
       <string>LeisureCoin payment request</string>
       <key>UTTypeConformsTo</key>
@@ -78,7 +84,7 @@
       <string>Editor</string>
       <key>LSItemContentTypes</key>
       <array>
-        <string>io.LeisureCoin.paymentrequest</string>
+        <string>io.savebitcoin.paymentrequest</string>
       </array>
       <key>LSHandlerRank</key>
       <string>Owner</string>

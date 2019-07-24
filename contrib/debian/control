@@ -22,9 +22,9 @@ Build-Depends: debhelper,
  libqrencode-dev,
  libprotobuf-dev, protobuf-compiler
 Standards-Version: 3.9.2
-Homepage: http://www.savebitcoin.io
-Vcs-Git: git://github.com/LeisureCoin/LeisureCoin.git
-Vcs-Browser: http://github.com/LeisureCoin/LeisureCoin
+Homepage: http://www.LeisureCoin.org
+Vcs-Git: git://github.com/LeisureCoin-official/LeisureCoin.git
+Vcs-Browser: http://github.com/LeisureCoin-official/LeisureCoin
 
 Package: LeisureCoind
 Architecture: any
@@ -47,7 +47,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - Qt GUI
  LeisureCoin (LeisureCoin) is a sustainable cryptocurrency modeled after
- Satoshi Nakamoto’s vision for Bitcoin. 
+ Satoshi Nakamoto’s vision for Bitcoin.
  It is a decentralized, peer-to-peer transactional currency designed
  to offer a solution to the problem posed by the exponential increase
  in energy consumed by Bitcoin and other proof-of-work currencies.

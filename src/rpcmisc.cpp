@@ -49,13 +49,14 @@ UniValue getinfo(const UniValue& params, bool fHelp)
     if (fHelp || params.size() != 0)
         throw runtime_error(
             "getinfo\n"
-            "Returns an object containing various state info.\n"
+            "\nReturns an object containing various state info.\n"
+
             "\nResult:\n"
             "{\n"
             "  \"version\": xxxxx,           (numeric) the server version\n"
             "  \"protocolversion\": xxxxx,   (numeric) the protocol version\n"
             "  \"walletversion\": xxxxx,     (numeric) the wallet version\n"
-            "  \"balance\": xxxxxxx,         (numeric) the total Leisurecoin balance of the wallet\n"
+            "  \"balance\": xxxxxxx,         (numeric) the total LeisureCoin balance of the wallet\n"
             "  \"blocks\": xxxxxx,           (numeric) the current number of blocks processed in the server\n"
             "  \"timeoffset\": xxxxx,        (numeric) the time offset\n"
             "  \"connections\": xxxxx,       (numeric) the number of connections\n"
@@ -66,13 +67,20 @@ UniValue getinfo(const UniValue& params, bool fHelp)
             "  \"keypoololdest\": xxxxxx,    (numeric) the timestamp (seconds since GMT epoch) of the oldest pre-generated key in the key pool\n"
             "  \"keypoolsize\": xxxx,        (numeric) how many new keys are pre-generated\n"
             "  \"unlocked_until\": ttt,      (numeric) the timestamp in seconds since epoch (midnight Jan 1 1970 GMT) that the wallet is unlocked for transfers, or 0 if the wallet is locked\n"
-            "  \"paytxfee\": x.xxxx,         (numeric) the transaction fee set in LSR/kb\n"
-            "  \"relayfee\": x.xxxx,         (numeric) minimum relay fee for non-free transactions in LSR/kb\n"
+            "  \"paytxfee\": x.xxxx,         (numeric) the transaction fee set in LeisureCoin/kb\n"
+            "  \"relayfee\": x.xxxx,         (numeric) minimum relay fee for non-free transactions in LeisureCoin/kb\n"
             "  \"staking status\": true|false,  (boolean) if the wallet is staking or not\n"
             "  \"errors\": \"...\"           (string) any error messages\n"
             "}\n"
+
             "\nExamples:\n" +
             HelpExampleCli("getinfo", "") + HelpExampleRpc("getinfo", ""));
+
+#ifdef ENABLE_WALLET
+    LOCK2(cs_main, pwalletMain ? &pwalletMain->cs_wallet : nullptr);
+#else
+    LOCK(cs_main);
+#endif
 
     proxyType proxy;
     GetProxy(NET_IPV4, proxy);
@@ -92,6 +100,13 @@ UniValue getinfo(const UniValue& params, bool fHelp)
     obj.push_back(Pair("proxy", (proxy.IsValid() ? proxy.proxy.ToStringIPPort() : string())));
     obj.push_back(Pair("difficulty", (double)GetDifficulty()));
     obj.push_back(Pair("testnet", Params().TestnetToBeDeprecatedFieldRPC()));
+
+    // During inital block verification chainActive.Tip() might be not yet initialized
+    if (chainActive.Tip() == nullptr) {
+        obj.push_back(Pair("status", "Blockchain information not yet available"));
+        return obj;
+    }
+
     obj.push_back(Pair("moneysupply",ValueFromAmount(chainActive.Tip()->nMoneySupply)));
 #ifdef ENABLE_WALLET
     if (pwalletMain) {
@@ -133,6 +148,7 @@ UniValue mnsync(const UniValue& params, bool fHelp)
             "  \"lastMasternodeList\": xxxx,        (numeric) Timestamp of last MN list message\n"
             "  \"lastMasternodeWinner\": xxxx,      (numeric) Timestamp of last MN winner message\n"
             "  \"lastBudgetItem\": xxxx,            (numeric) Timestamp of last MN budget message\n"
+            "  \"lastCommunityItem\": xxxx,         (numeric) Timestamp of last MN community vote message\n"
             "  \"lastFailure\": xxxx,           (numeric) Timestamp of last failed sync\n"
             "  \"nCountFailures\": n,           (numeric) Number of failed syncs (total)\n"
             "  \"sumMasternodeList\": n,        (numeric) Number of MN list messages (total)\n"
@@ -143,12 +159,15 @@ UniValue mnsync(const UniValue& params, bool fHelp)
             "  \"countMasternodeWinner\": n,    (numeric) Number of MN winner messages (local)\n"
             "  \"countBudgetItemProp\": n,      (numeric) Number of MN budget messages (local)\n"
             "  \"countBudgetItemFin\": n,       (numeric) Number of MN budget finalization messages (local)\n"
+            "  \"sumCommunityItemProp\": n,        (numeric) Number of MN community messages (total)\n"
+            "  \"countCommunityItemProp\": n,      (numeric) Number of MN community messages (local)\n"
             "  \"RequestedMasternodeAssets\": n, (numeric) Status code of last sync phase\n"
             "  \"RequestedMasternodeAttempt\": n, (numeric) Status code of last sync attempt\n"
             "}\n"
 
             "\nResult ('reset' mode):\n"
             "\"status\"     (string) 'success'\n"
+
             "\nExamples:\n" +
             HelpExampleCli("mnsync", "\"status\"") + HelpExampleRpc("mnsync", "\"status\""));
     }
@@ -160,6 +179,7 @@ UniValue mnsync(const UniValue& params, bool fHelp)
         obj.push_back(Pair("lastMasternodeList", masternodeSync.lastMasternodeList));
         obj.push_back(Pair("lastMasternodeWinner", masternodeSync.lastMasternodeWinner));
         obj.push_back(Pair("lastBudgetItem", masternodeSync.lastBudgetItem));
+        obj.push_back(Pair("lastCommunityItem", masternodeSync.lastCommunityItem));
         obj.push_back(Pair("lastFailure", masternodeSync.lastFailure));
         obj.push_back(Pair("nCountFailures", masternodeSync.nCountFailures));
         obj.push_back(Pair("sumMasternodeList", masternodeSync.sumMasternodeList));
@@ -170,6 +190,8 @@ UniValue mnsync(const UniValue& params, bool fHelp)
         obj.push_back(Pair("countMasternodeWinner", masternodeSync.countMasternodeWinner));
         obj.push_back(Pair("countBudgetItemProp", masternodeSync.countBudgetItemProp));
         obj.push_back(Pair("countBudgetItemFin", masternodeSync.countBudgetItemFin));
+        obj.push_back(Pair("sumCommunityItemProp", masternodeSync.sumCommunityItemProp));
+        obj.push_back(Pair("countCommunityItemProp", masternodeSync.countCommunityItemProp));
         obj.push_back(Pair("RequestedMasternodeAssets", masternodeSync.RequestedMasternodeAssets));
         obj.push_back(Pair("RequestedMasternodeAttempt", masternodeSync.RequestedMasternodeAttempt));
 
@@ -267,24 +289,45 @@ UniValue spork(const UniValue& params, bool fHelp)
     }
 
     throw runtime_error(
-        "spork <name> [<value>]\n"
-        "<name> is the corresponding spork name, or 'show' to show all current spork settings, active to show which sporks are active"
-        "<value> is a epoch datetime to enable or disable spork" +
-        HelpRequiringPassphrase());
+        "spork \"name\" ( value )\n"
+        "\nReturn spork values or their active state.\n"
+
+        "\nArguments:\n"
+        "1. \"name\"        (string, required)  \"show\" to show values, \"active\" to show active state.\n"
+        "                       When set up as a spork signer, the name of the spork can be used to update it's value.\n"
+        "2. value           (numeric, required when updating a spork) The new value for the spork.\n"
+
+        "\nResult (show):\n"
+        "{\n"
+        "  \"spork_name\": nnn      (key/value) Key is the spork name, value is it's current value.\n"
+        "  ,...\n"
+        "}\n"
+
+        "\nResult (active):\n"
+        "{\n"
+        "  \"spork_name\": true|false      (key/value) Key is the spork name, value is a boolean for it's active state.\n"
+        "  ,...\n"
+        "}\n"
+
+        "\nResult (name):\n"
+        " \"success|failure\"       (string) Wither or not the update succeeded.\n"
+
+        "\nExamples:\n" +
+        HelpExampleCli("spork", "show") + HelpExampleRpc("spork", "show"));
 }
 
 UniValue validateaddress(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "validateaddress \"LSRaddress\"\n"
-            "\nReturn information about the given LSR address.\n"
+            "validateaddress \"LeisureCoinaddress\"\n"
+            "\nReturn information about the given LeisureCoin address.\n"
             "\nArguments:\n"
-            "1. \"LSRaddress\"     (string, required) The LSR address to validate\n"
+            "1. \"LeisureCoinaddress\"     (string, required) The LeisureCoin address to validate\n"
             "\nResult:\n"
             "{\n"
             "  \"isvalid\" : true|false,         (boolean) If the address is valid or not. If not, this is the only property returned.\n"
-            "  \"address\" : \"LSRaddress\", (string) The LSR address validated\n"
+            "  \"address\" : \"LeisureCoinaddress\", (string) The LeisureCoin address validated\n"
             "  \"ismine\" : true|false,          (boolean) If the address is yours or not\n"
             "  \"isscript\" : true|false,        (boolean) If the key is a script\n"
             "  \"pubkey\" : \"publickeyhex\",    (string) The hex value of the raw public key\n"
@@ -387,9 +430,9 @@ UniValue createmultisig(const UniValue& params, bool fHelp)
 
                      "\nArguments:\n"
                      "1. nrequired      (numeric, required) The number of required signatures out of the n keys or addresses.\n"
-                     "2. \"keys\"       (string, required) A json array of keys which are LSR addresses or hex-encoded public keys\n"
+                     "2. \"keys\"       (string, required) A json array of keys which are LeisureCoin addresses or hex-encoded public keys\n"
                      "     [\n"
-                     "       \"key\"    (string) LSR address or hex-encoded public key\n"
+                     "       \"key\"    (string) LeisureCoin address or hex-encoded public key\n"
                      "       ,...\n"
                      "     ]\n"
 
@@ -422,20 +465,28 @@ UniValue verifymessage(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() != 3)
         throw runtime_error(
-            "verifymessage \"LSRaddress\" \"signature\" \"message\"\n"
+            "verifymessage \"LeisureCoinaddress\" \"signature\" \"message\"\n"
             "\nVerify a signed message\n"
+
             "\nArguments:\n"
-            "1. \"LSRaddress\"  (string, required) The LSR address to use for the signature.\n"
+            "1. \"LeisureCoinaddress\"  (string, required) The LeisureCoin address to use for the signature.\n"
             "2. \"signature\"       (string, required) The signature provided by the signer in base 64 encoding (see signmessage).\n"
             "3. \"message\"         (string, required) The message that was signed.\n"
+
             "\nResult:\n"
             "true|false   (boolean) If the signature is verified or not.\n"
+
             "\nExamples:\n"
             "\nUnlock the wallet for 30 seconds\n" +
             HelpExampleCli("walletpassphrase", "\"mypassphrase\" 30") +
-            "\nCreate the signature\n" + HelpExampleCli("signmessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\" \"my message\"") +
-            "\nVerify the signature\n" + HelpExampleCli("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\" \"signature\" \"my message\"") +
-            "\nAs json rpc\n" + HelpExampleRpc("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\", \"signature\", \"my message\""));
+            "\nCreate the signature\n" +
+            HelpExampleCli("signmessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\" \"my message\"") +
+            "\nVerify the signature\n" +
+            HelpExampleCli("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\" \"signature\" \"my message\"") +
+            "\nAs json rpc\n" +
+            HelpExampleRpc("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XZ\", \"signature\", \"my message\""));
+
+    LOCK(cs_main);
 
     string strAddress = params[0].get_str();
     string strSign = params[1].get_str();
@@ -472,12 +523,15 @@ UniValue setmocktime(const UniValue& params, bool fHelp)
         throw runtime_error(
             "setmocktime timestamp\n"
             "\nSet the local time to given timestamp (-regtest only)\n"
+
             "\nArguments:\n"
             "1. timestamp  (integer, required) Unix seconds-since-epoch timestamp\n"
             "   Pass 0 to go back to using the system time.");
 
     if (!Params().MineBlocksOnDemand())
         throw runtime_error("setmocktime for regression testing (-regtest mode) only");
+
+    LOCK(cs_main);
 
     RPCTypeCheck(params, boost::assign::list_of(UniValue::VNUM));
     SetMockTime(params[0].get_int64());
@@ -491,7 +545,8 @@ UniValue getstakingstatus(const UniValue& params, bool fHelp)
     if (fHelp || params.size() != 0)
         throw runtime_error(
             "getstakingstatus\n"
-            "Returns an object containing various staking information.\n"
+            "\nReturns an object containing various staking information.\n"
+
             "\nResult:\n"
             "{\n"
             "  \"validtime\": true|false,          (boolean) if the chain tip is within staking phases\n"
@@ -502,8 +557,15 @@ UniValue getstakingstatus(const UniValue& params, bool fHelp)
             "  \"mnsync\": true|false,             (boolean) if masternode data is synced\n"
             "  \"staking status\": true|false,     (boolean) if the wallet is staking or not\n"
             "}\n"
+
             "\nExamples:\n" +
             HelpExampleCli("getstakingstatus", "") + HelpExampleRpc("getstakingstatus", ""));
+
+#ifdef ENABLE_WALLET
+    LOCK2(cs_main, pwalletMain ? &pwalletMain->cs_wallet : nullptr);
+#else
+    LOCK(cs_main);
+#endif
 
     UniValue obj(UniValue::VOBJ);
     obj.push_back(Pair("validtime", chainActive.Tip()->nTime > Params().GenesisBlock().nTime));
