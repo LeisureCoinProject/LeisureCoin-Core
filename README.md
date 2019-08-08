@@ -1,6 +1,11 @@
 [![Build Status](https://travis-ci.com/LeisureCoinProject/LeisureCoine-Core.svg?branch=master)](https://travis-ci.com/LeisureCoinProject/LeisureCoin-explorer)
 ![LeisureCoin Logo](https://github.com/LeisureCoinProject/LeisureCoin-Core/blob/master/src/qt/res/images/leisure_logo_concept_05.jpg)
 
+<a href="https://discord.gg/ZasT85W"><img src="https://discordapp.com/api/guilds/364500397999652866/embed.png" alt="Discord server" /></a> <a href="https://twitter.com/intent/follow?screen_name=LeisureCoins"><img src="https://img.shields.io/twitter/follow/LeisureCoin.svg?style=social&logo=twitter" alt="follow on Twitter"></a>
+                                                                                                                                                     
+
+[Website](http://leisurecoins.org/) — [LeisureCoin Github](https://github.com/LeisureCoinProject/LeisureCoin-Core) - [Beta Android Mobile Wallet](https://drive.google.com/file/d/1hZLE47HVeH0TYlJdOS40s9clU53Szvec/view?usp=drivesdk) — [Block Explorer](https://leisurecoin.explorerhub.io/) — [Blog](https://www.reddit.com/r/LeisureCoin) — [Forum](https://bitcointalk.org/index.php?topic=5099711.0) — [Telegram](https://web.telegram.org/#/im?p=@LeisureCoins) — [Twitter](https://twitter.com/LeisureCoins)
+
 
 ### LeisureCoin Core integration/staging repository
 =================================================
