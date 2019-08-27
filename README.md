@@ -1,3 +1,5 @@
+POS-MOD Proof of stake patching.
+
 ![LeisureCoin Logo](https://github.com/LeisureCoinProject/LeisureCoin-Core/blob/master/src/qt/res/images/leisure_logo_concept_05.jpg)
 
 <a href="https://discord.gg/ZasT85W"><img src="https://discordapp.com/api/guilds/364500397999652866/embed.png" alt="Discord server" /></a> <a href="https://twitter.com/intent/follow?screen_name=LeisureCoins"><img src="https://img.shields.io/twitter/follow/LeisureCoin.svg?style=social&logo=twitter" alt="follow on Twitter"></a>
